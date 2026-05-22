@@ -18,10 +18,14 @@ def get_tles_from_url(url):
 
   return tles
 
-def fetch_tles(root=""):
-  satGroups = ["goes", "noaa", "starlink", "kuiper", "sss", "sci", "gps", "glonass", "galileo", "beidou"]
+def fetch_tles(root=".", groups=None):
+  if len(root) < 1:
+    root = "."
 
-  urls = { k: f"{root}data/tles/{k}.txt" for k in satGroups }
+  if groups is None or len(groups) < 1:
+    groups = ["goes", "noaa", "starlink", "kuiper", "sss", "sci", "gps", "glonass", "galileo", "beidou"]
+
+  urls = { k: f"{root}/data/tles/{k}.txt" for k in groups }
   data = { k: get_tles_from_url(u) for k,u in urls.items() }
 
   return data

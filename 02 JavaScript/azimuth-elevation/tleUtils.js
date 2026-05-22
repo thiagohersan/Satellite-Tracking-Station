@@ -17,11 +17,17 @@ async function getTleFromUrl(url) {
   return tles;
 }
 
-async function fetchTles(root="") {
-  const satGroups = ["goes", "noaa", "starlink", "kuiper", "sss", "sci", "gps", "glonass", "galileo", "beidou"];
+async function fetchTles(root = ".", satGroups = []) {
+  if (root.length < 1) {
+    root = ".";
+  }
+
+  if (satGroups.length < 1) {
+    satGroups = ["goes", "noaa", "starlink", "kuiper", "sss", "sci", "gps", "glonass", "galileo", "beidou"];
+  }
 
   // { k: f"../data/etc/{k}.txt" for k in satGroups }
-  const URLS = satGroups.reduce((acc, k) => ({ ...acc, [k]: `${root}data/tles/${k}.txt` }), {});
+  const URLS = satGroups.reduce((acc, k) => ({ ...acc, [k]: `${root}/data/tles/${k}.txt` }), {});
 
   const ps = satGroups.map(k => getTleFromUrl(URLS[k]));
   const data = await Promise.all(ps);

@@ -47,7 +47,7 @@
     const GPS_TLES = [];
 
     window.addEventListener("load", async () => {
-      const allTles = await fetchTles("https://astrolabe-www.github.io/artificial-calendar/");
+      const allTles = await fetchTles("https://astrolabe-www.github.io/artificial-calendar");
       Object.assign(GPS_TLES, allTles["gps"]);
 
       for (let idx = 0; idx < TESTS.length; idx++) {
